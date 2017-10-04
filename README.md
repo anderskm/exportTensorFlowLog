@@ -1,5 +1,35 @@
 # exportTensorFlowLog
 Export TensorFlow logs to common easy to read formats (csv-files, png-images, ...)
+<table>
+<tr>
+<th>Summary</th>
+<th>Format</th>
+</tr>
+<tr>
+<td>Scalars</td>
+<td>1 csv-file. One column per scalar summary tag.</td>
+</tr>
+<tr>
+<td>Images</td>
+<td>Multiple PNG-images structured in folderes depending on the name of the summary tags.</td>
+</tr>
+<tr>
+<td>Audio</td>
+<td>Not yet supported.</td>
+</tr>
+<tr>
+<td>Histograms</td>
+<td>Not yet supported.</td>
+</tr>
+<tr>
+<td>Distributions</td>
+<td>Not yet supported.</td>
+</tr>
+<tr>
+<td>Tensors</td>
+<td>Not yet supported.</td>
+</tr>
+</table>
 
 Tested on TensorFlow version 0.12.0 and Python 2.7.
 
