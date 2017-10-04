@@ -3,11 +3,11 @@ Export TensorFlow logs to common easy to read formats (csv-files, png-images, ..
 
 Tested on TensorFlow version 0.12.0 and Python 2.7.
 
-Newer versions may have event_accumulator located differently. Adjust import of it accordingly.
+Newer versions may have event_accumulator located differently. Adjust import of it accordingly. See table below.
 
 <table>
 <tr>
-<th>Version</th>
+<th>TF version</th>
 <th>event_accumulator location</th>
 <th>event_accumulator import</th>
 </tr>
@@ -28,3 +28,14 @@ Newer versions may have event_accumulator located differently. Adjust import of 
 <td>from ??? import event_accumulator</td>
 </tr>
 </table>
+
+## Usage
+
+```
+python readLogs.py <output-folder> <output-path-to-csv> <summaries>
+
+Inputs:
+   <input-path-to-logfile>  - Path to TensorFlow logfile.
+   <output-folder>          - Path to output folder.
+   <summaries>              - (Optional) Comma separated list of summaries to save in output-folder. Default: scalars, histograms, images, audio, compressedHistograms
+```
