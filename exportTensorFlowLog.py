@@ -1,11 +1,36 @@
-from tensorflow.python.summary import event_accumulator
+import tensorflow as tf
 import time
 import csv
 import sys
 import os
 import collections
 
-# '/home/anmo/AU_O_drive/ST_SPGroup/Projekter/2017_Noisy_labels/logs/slic_varying_noise_0.5/vgg_noise_model_train_procedure3__max0__slic_size_10_noise_0.5_trace_1e-2_noise_kernel_size_3x3_lr_0.01_wd_0.0001_fc_32_layers_20.0_2017.05.07_06.42.46/events.out.tfevents.1494132171.lena'
+# Import the event accumulator from Tensorboard. Location varies between Tensorflow versions. Try each known location until one works.
+eventAccumulatorImported = False;
+# TF version < 1.1.0
+if (not eventAccumulatorImported):
+	try:
+		from tensorflow.python.summary import event_accumulator
+		eventAccumulatorImported = True;
+	except ImportError:
+		eventAccumulatorImported = False;
+# TF version = 1.1.0
+if (not eventAccumulatorImported):
+	try:
+		from tensorflow.tensorboard.backend.event_processing import event_accumulator
+		eventAccumulatorImported = True;
+	except ImportError:
+		eventAccumulatorImported = False;
+# TF version >= 1.3.0
+if (not eventAccumulatorImported):
+	try:
+		from tensorboard.backend.event_processing import event_accumulator
+		eventAccumulatorImported = True;
+	except ImportError:
+		eventAccumulatorImported = False;
+# TF version = Unknown
+if (not eventAccumulatorImported):
+	raise ImportError('Could not locate and import Tensorflow event accumulator.')
 
 summariesDefault = ['scalars','histograms','images','audio','compressedHistograms'];
 
@@ -86,6 +111,8 @@ for t in tags:
 		tagSum = str(tags[t]);
 	print('   ' + t + ': ' + tagSum);
 
+if not os.path.isdir(outputFolder):
+	os.makedirs(outputFolder);
 
 if ('audio' in summaries):
 	print(' ');
@@ -120,7 +147,7 @@ if ('images' in summaries):
 				os.makedirs(imageTagDir);
 			for image in images:
 				imageFilename = imageTagDir + '/' + str(image.step) + '.png';
-				with open(imageFilename,'w+') as f:
+				with open(imageFilename,'wb') as f:
 					f.write(image.encoded_image_string);
 
 if ('scalars' in summaries):
@@ -130,7 +157,7 @@ if ('scalars' in summaries):
 	print('   CSV-path: ' + csvFileName);
 	scalarTags = tags['scalars'];
 	with Timer():
-		with open(csvFileName,'wb') as csvfile:
+		with open(csvFileName,'w') as csvfile:
 			logWriter = csv.writer(csvfile, delimiter=',');
 
 			# Write headers to columns
