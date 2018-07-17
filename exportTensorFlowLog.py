@@ -172,8 +172,12 @@ if ('scalars' in summaries):
 				data = [v.wall_time, v.step];
 				for s in scalarTags:
 					scalarTag = ea.Scalars(s);
-					S = scalarTag[i];
-					data.append(S.value);
+					if i < len(scalarTag):
+						S = scalarTag[i];
+						data.append(S.value);
+					else:
+						print("ScalarTag {} is too short - writing NaN".format(s))
+						data.append(math.nan)
 				logWriter.writerow(data);
 
 print(' ');
