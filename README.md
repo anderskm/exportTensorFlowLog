@@ -36,7 +36,7 @@ Tested on TensorFlow version 0.11.0, 1.1.0 and 1.3.0 and Python 2.7 and 3.6.
 ## Usage
 
 ```
-python readLogs.py <output-folder> <output-path-to-csv> <summaries>
+python readLogs.py <input-path-to-logfile> <output-folder> <summaries>
 
 Inputs:
    <input-path-to-logfile>  - Path to TensorFlow logfile.
